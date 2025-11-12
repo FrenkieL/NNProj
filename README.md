@@ -80,4 +80,4 @@ chmod +x clean.sh
 
 ## Licenca
 
-Projekt kreiran u edukacijske svrhe kao dio kolegija **Neuronske mreže** na [FER-u](https://www.fer.unizg.hr/).
+Projekt kreiran u edukacijske svrhe kao dio kolegija [**Neuronske mreže**](https://www.fer.unizg.hr/predmet/neumre) na [**FER-u**](https://www.fer.unizg.hr/).
