@@ -47,6 +47,10 @@ source src/venv/bin/activate
 # Za Fish:
 source src/venv/bin/activate.fish
 ```
+### Deaktivacija virtualnog okruženja
+```bash
+deactivate
+```
 
 ### Ručna instalacija
 
