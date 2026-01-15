@@ -40,7 +40,7 @@ class CNN(nn.Module):
         self.optimizer = torch.optim.Adam(self.parameters())
         self.criterion = nn.BCELoss()
 
-    def forward(x):
+    def forward(self, x):
         return self.model(x)
 
     def fit(self, X_train, y_train, epochs=100, batch_size=32, verbose=False):
@@ -75,7 +75,7 @@ class CNN(nn.Module):
             
             accuracy = correct / total
             if verbose:
-                print(f"Epoch {epoch+1}/{epochs} - Loss: {final_loss:.4f}, Accuracy: {final_accuracy:.4f}")
+                print(f"Epoch {epoch+1}/{epochs} - Loss: {final_loss:.4f}, Accuracy: {accuracy:.4f}")
         
         if not verbose:
             print(f"Training complete - Final Loss: {final_loss:.4f}, Accuracy: {final_accuracy:.4f}")

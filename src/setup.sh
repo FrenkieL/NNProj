@@ -35,7 +35,7 @@ fi
 
 # Activate venv
 echo -e "${GREEN}Activating virtual environment...${NC}"
-source "$VENV_PATH/bin/activate"
+source "$VENV_PATH/bin/activate.fish"
 
 # Upgrade pip
 echo -e "${GREEN}Upgrading pip...${NC}"
@@ -51,6 +51,6 @@ fi
 
 echo -e "${GREEN}Setup complete!${NC}"
 echo -e "${YELLOW}To activate the environment, run:${NC}"
-echo -e "  source src/venv/bin/activate"
+echo -e "  source src/venv/bin/activate.fish"
 echo -e "${YELLOW}To deactivate the environment, run:${NC}"
 echo -e "  deactivate"

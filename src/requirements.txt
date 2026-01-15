@@ -1,8 +1,8 @@
-torch
-torchvision
-torchinfo
 numpy
 matplotlib
-pillow
 scikit-learn
 tqdm
+streamlit
+tensorflow
+opencv-python
+seaborn
