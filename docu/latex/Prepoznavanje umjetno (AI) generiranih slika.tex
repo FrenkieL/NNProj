@@ -3,6 +3,9 @@
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 %Template version as of 6/27/2024
 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[croatian]{babel}
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -48,19 +51,21 @@ smo razvili model koji prepoznaje AI generirane slike.
 AI, deep-fake, perceptron
 \end{IEEEkeywords}
 
-\section{Uvod}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. For more information about how to become an IEEE Conference author or how to write your paper, please visit   IEEE Conference Author Center website: https://conferences.ieeeauthorcenter.ieee.org/.
+\section{Uvod}Zadnjih par godina svjedočimo nevjerojatnom napretku generativnih modela poput GAN-ova i difuzijskih modela (npr. Stable Diffusion i Midjourney), koji su podigli kvalitetu umjetno generiranih slika na razinu koju je ljudskom oku gotovo nemoguće razlikovati od stvarnosti. Iako ova tehnologija nudi goleme kreativne mogućnosti, ona donosi i ozbiljne izazove u području digitalne forenzike i provjere informacija, jer se lažni vizualni sadržaji mogu lako koristiti za manipulaciju javnim mnijenjem ili krađu identiteta. U ovom projektu fokusirali smo se na razvoj sustava za automatsko prepoznavanje AI generiranih slika koristeći duboko učenje. Naš cilj je istražiti možemo li pomoću specifičnih arhitektura neuronskih mreža pouzdano "uhvatiti" suptilne tragove koje generativni procesi ostavljaju u pikselima.
 
-\subsection{Opis problema}
+\subsection{Opis problema}Glavni zadatak koji rješavamo je binarna klasifikacija: moramo odrediti pripada li ulazna slika klasi "stvarnih" ili "AI generiranih" slika. Iako to na papiru zvuči jednostavno, u praksi je vrlo izazovno jer moderni generatori više ne ostavljaju očite pogreške u teksturama ili frekvencijskom spektru, što je ranije bio glavni način detekcije. Također, modeli moraju biti sposobni prepoznati slike iz različitih izvora, a ne samo iz onih na kojima su trenirani.
 
-\subsection{Motivacija}
+\subsection{Motivacija}Glavni pokretač za ovaj rad je činjenica da povjerenje u digitalne medije rapidno opada. Željeli smo stvoriti alat koji bi mogao služiti kao prva linija obrane protiv dezinformacija. Osim toga, kao studentima nam je bilo zanimljivo dublje ući u samu matematiku klasifikatora – istražiti kako različite funkcije gubitka i optimizacijske metode utječu na točnost modela kada su razlike između klasa minimalne.
 
-\section{Što literatura kaže}
+\section{Što literatura kaže}Pregledom dosadašnjih radova vidjeli smo da su konvolucijske neuronske mreže (CNN) i dalje "zlatni standard" za ovaj problem zbog svoje sposobnosti da izvuku lokalne značajke i teksturalne anomalije. Modeli poput ResNet-50 i EfficientNet-a često postižu točnost veću od 90\% na standardnim skupovima podataka kao što je CIFAKE. Međutim, literatura također naglašava jedan veliki problem: generalizaciju. Modeli koji savršeno rade na slikama iz jednog generatora često potpuno zakazuju kada im se podmetne slika iz novijeg ili drugačijeg modela. Novija istraživanja sugeriraju da bi rješenje moglo biti u promjeni klasifikacijske glave – na primjer, zamjenom standardnog Softmax sloja s SVM (Support Vector Machine) klasifikatorom, što u nekim slučajevima daje robusnije rezultate na rubnim primjerima.
 
 \section{Rješenje}
+\subsection{Opis i metodologija rada}Naše rješenje temelji se na usporedbi dvije varijante CNN modela. Oba modela koriste sličnu "okosnicu" za ekstrakciju značajki, ali se razlikuju u načinu donošenja konačne odluke:
+CNN s Softmax slojem: Klasičan pristup koji koristi kros-entropijsku funkciju gubitka i daje nam vjerojatnost pripadnosti klasi.
+Hibridni CNN-SVM model: Ovdje smo zadnji sloj mreže zamijenili SVM-om s linearnim kernelom. SVM pokušava maksimizirati marginu između stvarnih i lažnih slika u prostoru značajki koji je mreža naučila, što bi trebalo donijeti bolju separaciju klasa.
 
-\subsection{Opis rješenja}
+\subsection{Optimizacija i treniranje}Da bismo izvukli maksimum iz oba modela, nismo nasumično birali parametre, već smo proveli Grid Search optimizaciju. Kod SVM-a smo sustavno varirali parametar regularizacije $C$ i parametar $\gamma$ (gamma) kako bismo pronašli idealan kompromis između točnosti na trening setu i sposobnosti generalizacije na novim podacima.Modeli su trenirani na CIFAKE datasetu koji sadrži 120,000 slika, što nam je osiguralo dovoljno veliku i balansiranu bazu za učenje. Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
+
 
 \subsection{Opis eksperimentalnih rezultata}
 
