@@ -43,7 +43,7 @@ if __name__ == "__main__":
     results["CNN"] = evaluate_model("CNN", y_test, cnn_preds)
 
     # 2. Evaluate SVMs
-    svm_types = ["linear", "rbf", "cosine"]
+    svm_types = ["linear", "rbf"]
     
     for k in svm_types:
         try:

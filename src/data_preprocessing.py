@@ -5,7 +5,7 @@ import pickle
 from sklearn.model_selection import train_test_split
 
 IMG_SIZE = 48                 # !!!!! NE MIJENJAJ OVO JER NEĆE CNN RADIT !!!!!!
-CATEGORIES = ["REAL", "FAKE"] # ovo je radilo liku: https://github.com/SanKolisetty/AI-Image-Classifier/blob/main/AIImageClassifier.ipynb
+CATEGORIES = ["Real", "AIGenerated"] # ovo je radilo liku: https://github.com/SanKolisetty/AI-Image-Classifier/blob/main/AIImageClassifier.ipynb
 DATA_DIR = "./dataset"        # ovo isto
 
 def create_dataset(data_dir=DATA_DIR):
