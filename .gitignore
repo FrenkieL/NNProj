@@ -18,3 +18,4 @@ docu/latex/projektS.bst
 docu/latex/projekt_simple.bib
 docu/latex/IEEEtran_bst_HOWTO.pdf
 src/venv
+src/dataset
