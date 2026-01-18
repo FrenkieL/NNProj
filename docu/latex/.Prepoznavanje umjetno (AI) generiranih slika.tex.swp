@@ -18,6 +18,7 @@
 \usepackage{paralist}
 \usepackage{import}
 \usepackage{float}
+\usepackage{multirow}
 
 \usetikzlibrary{shapes.multipart, calc}
 
@@ -115,8 +116,6 @@ Pri testiranju smo koristili:
 \end{enumerate}
 Za obje inačice prvotni ispitni skup dijelimo na skup za skup za učenje i skup za testiranje u omjeru 70:30, za učenje CNN (što uključuje i "okosnicu" iz cjeline \ref{sect:metoda}) se daj skup dodatno dijeli u omjeru 90:10 na skup za učenje i skup za validaciju.
 
-%TODO: dodaj jos dijagram sa podijeljenim pravokutnicima za oba test-seta
-
 
 Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
 
@@ -124,17 +123,49 @@ Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (np
 \subsection{Opis eksperimentalnih rezultata}
 Rezultati su dobiveni na podskupu CIFAKE skupa za testiranje (20k slika, 10k po kategoriji).
 
+\begin{tabular}{|p{50pt}|p{30pt}|p{30pt}|p{30pt}|p{30pt}|}
+	\hline
+	\textbf{model} & \textbf{acc.} & \textbf{prec} & \textbf{recall} & \textbf{f1-score}\\
+	\hline
+	CNN & 93.25\% & 0.90 & 0.97 & 0.94\\ \hline
+	CNN + SVM(linear) & 94.31\% & 0.94 & 0.95 & 0.94\\ \hline
+	CNN + SVM(RBF) & 94.59\% & 0.95 & 0.95 & 0.95\\ \hline
+\end{tabular}
+\ \\
+Odnosno, kada bi grafički prikazali točnost za sva tri modela:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.28]{../pics/acc_chart.jpg}\\
+
+\end{figure}
+\ \\
+
+
 \section{Diskusija}
 
 \subsection{O našim rezultatima}
 Na grafu točnosti vidimo da modeli svi imaju vrlo sličnu točnost. Što je i za očekivati obzirom da dijele većinu arhitekture. Samo je način donošenja odluke drugačiji nakon što su slike već vektorizirane. Također vidimo da CNN-SVM sa RBF kernelom ima najveću točnost. Autori misle da je razlogu tomu: 
-\begin{inparaenum}\item Krutost linearnog kernela: jedan piksel može više utjecati na vrijednost \item RBF se bolje ponaša kod linearno neodvojivih problema, što ovo jest. \item dodatni hiperparametar kod RBF kernela ($\gamma$) \end{inparaenum}.
+\begin{inparaenum}\item Krutost linearnog kernela \item dodatni hiperparametar kod RBF kernela ($\gamma$) \end{inparaenum}.
 No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.\\
 U cjelini \ref{sect:litrev} je rečeno da je CNN "zlatni standard" za ovakve probleme. No vidimo da je moguće dobiti i bolje rezultate ako se izgradi mreža koja zadržava svu moć vektorizacije slike koju nude ulazni slojevi CNN mreža te se još k tome doda model strojnog učenja koji bolje klasificira primjere neko gusti slojevi.
 
 
 \subsection{Usporedba sa ostalima}
+Rezultati su vrlo slični, barem sa usporedivim arhitekturama, što je i za očekivati obzirom da je arhitektura mreže gotovo identična te da su skupovi podataka 
+slične veličine. Naša mreža, napose SVM za RBF kernelom ima nešto bolji rezultat. To je vjerojatno zbog poboljšane mogućnosti klasifikacije
+koju nudi kernel-SVM u odnosu na guste slojeve te zbog razloga navedenih u cjelini (ref: ono kad pricamo o RBF)
 
+\begin{tabular}{|p{50pt}|p{50pt}|p{30pt}|p{25pt}|p{25pt}|p{25pt}|}
+	\hline
+	\textbf{model} & \textbf{dataset} & \textbf{acc.} & \textbf{prec} & \textbf{recall} & \textbf{f1-score}\\
+	\hline
+	CvT \ref{} & ArtiFact & 98.54\% & 0.99 & 0.98 & 0.98\\ \hline
+	CNN \ref{} & Kaggle ai-get-img, CIFAKE, pygoogle & 93.9\% & 0.97 & 0.91 & 0.94\\ \hline
+	ViT \ref{} & CIFAKE & 98.25\% & 0.99 & 0.98 & 0.98\\ \hline
+\end{tabular}
+\ \\
+Međutim naši rezultati su znatno lošiji od novijih modela kao što su ViT transformatori ili modeli bazirani na njima (CvT). Transformatori bolje zadržavaju podatke nakon dugih sekvenci, odnosno između udaljenih piksela na istoj slici. Globalni uzorci se bolje raspoznavaju nego kod konvolucijskih mreža, bez gubitka kvalitete prepoznavanja lokalnih uzoraka \ref{}.
 
 
 \section*{arhitketura CNN}
