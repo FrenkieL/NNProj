@@ -13,11 +13,17 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{tikz}
+\usepackage{relsize}
+\usepackage{calc}
 \usepackage[inline]{enumitem}
+\usepackage{import}
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
     
-\usepackage{import}
+\tikzset{fontscale/.style = {font=\relsize{#1}}
+    }
+
 \subimport{../layers/}{init}
 \usetikzlibrary{positioning}
 \usetikzlibrary{3d} %for including external image 
@@ -91,10 +97,35 @@ CNN s Softmax slojem: Klasičan pristup koji koristi kros-entropijsku funkciju g
 Hibridni CNN-SVM model: Ovdje smo zadnji sloj mreže zamijenili SVM-om s linearnim kernelom. SVM pokušava maksimizirati marginu između stvarnih i lažnih slika u prostoru značajki koji je mreža naučila, što bi trebalo donijeti bolju separaciju klasa.
 
 \subsection{Opis rješenja}
-CNN koji smo koristili ima arhitekturu, odnosno slojeve kao na slici %\ref{pic:CNN_layers}.
+CNN koji smo koristili ima arhitekturu, odnosno slojeve kao na slici \ref{pic:CNN_layers}.
 
-\begin{tikzpicture}
-%\label{pic:CNN_layers}
+
+Kao što je već ranije spomenuto (cjelina \ref{sect:metoda}) "okosnica", odnosno svi slojevi prije sloja za vektorizaciju je zajednički za sve modele. Kod CNN-SVM hibridne inačice se svi slojevi nakon toga jednostavno zamijene SVM-om. To je pak prikazano na slici \ref{}
+
+\subsection{Optimizacija i treniranje}Da bismo izvukli maksimum iz oba modela, nismo nasumično birali parametre, već smo proveli Grid Search optimizaciju. Kod SVM-a smo sustavno varirali parametar regularizacije $C$ i parametar $\gamma$ (gamma) kako bismo pronašli idealan kompromis između točnosti na trening setu i sposobnosti generalizacije na novim podacima.Modeli su trenirani na CIFAKE datasetu koji sadrži 120,000 slika, što nam je osiguralo dovoljno veliku i balansiranu bazu za učenje. Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
+
+
+\subsection{Opis eksperimentalnih rezultata}
+Rezultati su dobiveni na podskupu CIFAKE skupa za testiranje (20k slika, 10k po kategoriji).
+
+\section{Diskusija}
+
+\subsection{O našim rezultatima}
+Na grafu točnosti vidimo da modeli svi imaju vrlo sličnu točnost. Što je i za očekivati obzirom da dijele većinu arhitekture. Samo je način donošenja odluke drugačiji nakon što su slike već vektorizirane. Također vidimo da CNN-SVM sa RBF kernelom ima najveću točnost. Autori misle da je razlogu tomu: 
+%\begin{inumerate} \item Krutost linearnog kernela: jedan piksel može više utjecati na vrijednost \item RBF se bolje ponaša kod linearno neodvojivih problema, što ovo jest. \item dodatni hiperparametar kod RBF kernela ($\gamma$). \begin{inumerate}.
+No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.
+
+
+\subsection{Usporedba sa ostalima}
+
+
+
+\section*{arhitketura CNN}
+\ \\
+\\
+\\
+\begin{tikzpicture}[scale=0.5,rotate=90,transform shape]
+\label{pic:CNN_layers}
 \tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
 \tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
 
@@ -285,25 +316,160 @@ CNN koji smo koristili ima arhitekturu, odnosno slojeve kao na slici %\ref{pic:C
 \draw [connection]  (dense2-east)    -- node {\midarrow} (output-west);
 
 
-\end{tikzpicture}
-
-Kao što je već ranije spomenuto (cjelina \ref{sect:metoda}) "okosnica", odnosno svi slojevi prije sloja za vektorizaciju je zajednički za sve modele. Kod CNN-SVM hibridne inačice se svi slojevi nakon toga jednostavno zamijene SVM-om.
-
-\subsection{Optimizacija i treniranje}Da bismo izvukli maksimum iz oba modela, nismo nasumično birali parametre, već smo proveli Grid Search optimizaciju. Kod SVM-a smo sustavno varirali parametar regularizacije $C$ i parametar $\gamma$ (gamma) kako bismo pronašli idealan kompromis između točnosti na trening setu i sposobnosti generalizacije na novim podacima.Modeli su trenirani na CIFAKE datasetu koji sadrži 120,000 slika, što nam je osiguralo dovoljno veliku i balansiranu bazu za učenje. Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
+\end{tikzpicture} 
 
 
-\subsection{Opis eksperimentalnih rezultata}
-Rezultati su dobiveni na podskupu CIFAKE skupa za testiranje (20k slika, 10k po kategoriji).
 
-\section{Diskusija}
+\section*{arhitketura CNN-SVM}
+\ \\
+\\
+\\
+\begin{tikzpicture}[scale=0.5,rotate=90,transform shape]
+\label{pic:CNN_layers}
+\tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
+\tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
 
-\subsection{O našim rezultatima}
-Na grafu točnosti vidimo da modeli svi imaju vrlo sličnu točnost. Što je i za očekivati obzirom da dijele većinu arhitekture. Samo je način donošenja odluke drugačiji nakon što su slike već vektorizirane. Također vidimo da CNN-SVM sa RBF kernelom ima najveću točnost. Autori misle da je razlogu tomu: 
-%\begin{inumerate} \item Krutost linearnog kernela: jedan piksel može više utjecati na vrijednost \item RBF se bolje ponaša kod linearno neodvojivih problema, što ovo jest. \item dodatni hiperparametar kod RBF kernela ($\gamma$). \begin{inumerate}.
-No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.
+
+\pic[shift={(0,0,0)}] at (0,0,0) 
+    {Box={
+        name=conv1,
+        caption=Conv2D 32,
+        xlabel={{32, }},
+        zlabel=128,
+        fill=\ConvColor,
+        height=64,
+        width=2,
+        depth=64
+        }
+    };
 
 
-\subsection{Usporedba sa ostalima}
+\pic[shift={ (0,0,0) }] at (conv1-east) 
+    {Box={
+        name=pool1,
+        caption=MaxPool,
+        fill=\PoolColor,
+        opacity=0.5,
+        height=32,
+        width=1,
+        depth=32
+        }
+    };
+
+
+\pic[shift={(1.5,0,0)}] at (pool1-east) 
+    {Box={
+        name=conv2,
+        caption=Conv2D 64,
+        xlabel={{64, }},
+        zlabel=64,
+        fill=\ConvColor,
+        height=32,
+        width=4,
+        depth=32
+        }
+    };
+
+
+\draw [connection]  (pool1-east)    -- node {\midarrow} (conv2-west);
+
+
+\pic[shift={ (0,0,0) }] at (conv2-east) 
+    {Box={
+        name=pool2,
+        caption=MaxPool,
+        fill=\PoolColor,
+        opacity=0.5,
+        height=16,
+        width=1,
+        depth=16
+        }
+    };
+
+
+\pic[shift={(1.5,0,0)}] at (pool2-east) 
+    {Box={
+        name=conv3,
+        caption=Conv2D 128,
+        xlabel={{128, }},
+        zlabel=32,
+        fill=\ConvColor,
+        height=16,
+        width=6,
+        depth=16
+        }
+    };
+
+
+\draw [connection]  (pool2-east)    -- node {\midarrow} (conv3-west);
+
+
+\pic[shift={ (0,0,0) }] at (conv3-east) 
+    {Box={
+        name=pool3,
+        caption=MaxPool,
+        fill=\PoolColor,
+        opacity=0.5,
+        height=8,
+        width=1,
+        depth=8
+        }
+    };
+
+
+\pic[shift={(1.5,0,0)}] at (pool3-east) 
+    {Box={
+        name=conv4,
+        caption=Conv2D 256,
+        xlabel={{256, }},
+        zlabel=16,
+        fill=\ConvColor,
+        height=8,
+        width=8,
+        depth=8
+        }
+    };
+
+
+\draw [connection]  (pool3-east)    -- node {\midarrow} (conv4-west);
+
+
+\pic[shift={ (0,0,0) }] at (conv4-east) 
+    {Box={
+        name=pool4,
+        caption=MaxPool,
+        fill=\PoolColor,
+        opacity=0.5,
+        height=4,
+        width=1,
+        depth=4
+        }
+    };
+
+
+\pic[shift={(1.5,0,0)}] at (pool4-east) 
+    {Box={
+        name=flat,
+        caption=Vektorizacija,
+        xlabel={{1, }},
+        zlabel=1,
+        fill=\ConvColor,
+        height=32,
+        width=1,
+        depth=1
+        }
+    };
+
+
+\draw [connection]  (pool4-east)    -- node {\midarrow} (flat-west);
+
+\draw [connection]  (flat-west)    -- node {\midarrow} (11.5, 0);
+
+\draw [black, fill=lightgray] ++(11.5,-3) rectangle ++(3.5,6) node[pos=.5, fontscale=3] {SVM};
+
+\end{tikzpicture} 
+
+
 
 \section*{Literatura}
 
