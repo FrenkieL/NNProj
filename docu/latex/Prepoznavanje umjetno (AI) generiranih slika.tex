@@ -17,6 +17,9 @@
 \usepackage{calc}
 \usepackage[inline]{enumitem}
 \usepackage{import}
+\usepackage{float}
+
+\usetikzlibrary{shapes.multipart, calc}
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -102,7 +105,19 @@ CNN koji smo koristili ima arhitekturu, odnosno slojeve kao na slici \ref{pic:CN
 
 Kao što je već ranije spomenuto (cjelina \ref{sect:metoda}) "okosnica", odnosno svi slojevi prije sloja za vektorizaciju je zajednički za sve modele. Kod CNN-SVM hibridne inačice se svi slojevi nakon toga jednostavno zamijene SVM-om. To je pak prikazano na slici \ref{pic:CNN_SVM_layers}
 
-\subsection{Optimizacija i treniranje}Da bismo izvukli maksimum iz oba modela, nismo nasumično birali parametre, već smo proveli Grid Search optimizaciju. Kod SVM-a smo sustavno varirali parametar regularizacije $C$ i parametar $\gamma$ (gamma) kako bismo pronašli idealan kompromis između točnosti na trening setu i sposobnosti generalizacije na novim podacima.Modeli su trenirani na CIFAKE datasetu koji sadrži 120,000 slika, što nam je osiguralo dovoljno veliku i balansiranu bazu za učenje. Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
+\subsection{Optimizacija i treniranje}Da bismo izvukli maksimum iz oba modela, nismo nasumično birali parametre, već smo proveli Grid Search optimizaciju. Kod SVM-a smo sustavno varirali parametar regularizacije $C$ i parametar $\gamma$ (gamma) kako bismo pronašli idealan kompromis između točnosti na trening setu i sposobnosti generalizacije na novim podacima.Modeli su trenirani na CIFAKE datasetu koji sadrži 120,000 slika, što nam je osiguralo dovoljno veliku i balansiranu bazu za učenje. 
+
+Pri testiranju smo koristili:
+\begin{enumerate}
+\item Podjelu 7:63:30 za CNN inačicu
+\item Podjelu 70:30 za SVM dio CNN-SVM Inačice.
+\end{enumerate}
+Za obje inačice prvotni ispitni skup dijelimo na skup za skup za učenje i skup za testiranje u omjeru 70:30, za učenje CNN (što uključuje i "okosnicu" iz cjeline \ref{sect:metoda}) se daj skup dodatno dijeli u omjeru 90:10 na skup za učenje i skup za validaciju.
+
+%TODO: dodaj jos dijagram sa podijeljenim pravokutnicima za oba test-seta
+
+
+Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
 
 
 \subsection{Opis eksperimentalnih rezultata}
