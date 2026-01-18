@@ -1,5 +1,5 @@
 import numpy as np
-import data_processing
+import data_preprocessing
 from sklearn.svm import LinearSVC, SVC
 from sklearn.preprocessing import Normalizer
 from sklearn.model_selection import GridSearchCV
@@ -53,8 +53,8 @@ class SVMManager:
 if __name__ == "__main__":
     # za ovo se mora napravit preprocessing -> vidi main u CNN_body.py 
     # inace bi trebali vektorizirat slike al cemu kad vec CNN baci vektor prije softmaxa
-    X_train_feats = data_processing.load_pickle("X_train_features.pickle")
-    y_train = data_processing.load_pickle("y_train.pickle")
+    X_train_feats = data_preprocessing.load_pickle("X_train_features.pickle")
+    y_train = data_preprocessing.load_pickle("y_train.pickle")
     
     # linearni
     svm_lin = SVMManager('linear')

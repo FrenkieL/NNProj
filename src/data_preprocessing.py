@@ -6,7 +6,8 @@ from sklearn.model_selection import train_test_split
 
 IMG_SIZE = 48                 # !!!!! NE MIJENJAJ OVO JER NEĆE CNN RADIT !!!!!!
 CATEGORIES = ["Real", "AIGenerated"] # ovo je radilo liku: https://github.com/SanKolisetty/AI-Image-Classifier/blob/main/AIImageClassifier.ipynb
-DATA_DIR = "./dataset"        # ovo isto
+DATA_DIR = "../../archive/train"        # ovo isto
+#DATA_DIR = "../../CIFAKE/train"        # ovo isto
 
 def create_dataset(data_dir=DATA_DIR):
     data = []

@@ -19,3 +19,8 @@ docu/latex/projekt_simple.bib
 docu/latex/IEEEtran_bst_HOWTO.pdf
 src/venv
 src/dataset
+src/X_test.pickle
+.gitignore
+src/y_test.pickle
+src/y_train.pickle
+src/X_train.pickle

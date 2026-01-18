@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-import data_processing
-from CNN_body import AIImageDetector
-from SVMs import SVMManager
+import data_preprocessing
+from CNN_body import *
+from SVM import *
 
 def evaluate_model(name, y_true, y_pred):
     acc = accuracy_score(y_true, y_pred)
@@ -27,9 +27,9 @@ def plot_comparison(results):
 if __name__ == "__main__":
     print("--- Loading Test Data ---")
     # We need Raw images for CNN, Features for SVM
-    X_test_raw = data_processing.load_pickle("X_test.pickle")
-    X_test_feats = data_processing.load_pickle("X_test_features.pickle")
-    y_test = data_processing.load_pickle("y_test.pickle")
+    X_test_raw = data_preprocessing.load_pickle("X_test.pickle")
+    X_test_feats = data_preprocessing.load_pickle("X_test_features.pickle")
+    y_test = data_preprocessing.load_pickle("y_test.pickle")
     
     results = {}
 

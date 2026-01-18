@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras import layers, models
 import numpy as np
-import data_processing
+import data_preprocessing
 
 class CNN:
     def __init__(self, input_shape=(48, 48, 3)):
@@ -60,9 +60,9 @@ class CNN:
         return self.feature_extractor.predict(X, batch_size=64)
 
 if __name__ == "__main__":
-    X_train = data_processing.load_pickle("X_train.pickle")
-    y_train = data_processing.load_pickle("y_train.pickle")
-    X_test = data_processing.load_pickle("X_test.pickle")
+    X_train = data_preprocessing.load_pickle("X_train.pickle")
+    y_train = data_preprocessing.load_pickle("y_train.pickle")
+    X_test = data_preprocessing.load_pickle("X_test.pickle")
     
     model = CNN()
     model.train(X_train, y_train, epochs=15)
@@ -72,6 +72,8 @@ if __name__ == "__main__":
     X_train_feats = model.extract_features(X_train)
     X_test_feats = model.extract_features(X_test)
     
-    data_processing.save_pickle(X_train_feats, "X_train_features.pickle")
-    data_processing.save_pickle(X_test_feats, "X_test_features.pickle")
+    data_preprocessing.save_pickle(X_train_feats, "X_train_features.pickle")
+    data_preprocessing.save_pickle(X_test_feats, "X_test_features.pickle")
     print(f"Features saved. Shape: {X_train_feats.shape}")
+
+
