@@ -145,6 +145,7 @@ Odnosno, kada bi grafički prikazali točnost za sva tri modela:
 \section{Diskusija}
 
 \subsection{O našim rezultatima}
+\label{sect:ourres}
 Na grafu točnosti vidimo da modeli svi imaju vrlo sličnu točnost. Što je i za očekivati obzirom da dijele većinu arhitekture. Samo je način donošenja odluke drugačiji nakon što su slike već vektorizirane. Također vidimo da CNN-SVM sa RBF kernelom ima najveću točnost. Autori misle da je razlogu tomu: 
 \begin{inparaenum}\item Krutost linearnog kernela \item dodatni hiperparametar kod RBF kernela ($\gamma$) \end{inparaenum}.
 No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.\\
@@ -152,9 +153,9 @@ U cjelini \ref{sect:litrev} je rečeno da je CNN "zlatni standard" za ovakve pro
 
 
 \subsection{Usporedba sa ostalima}
-Rezultati su vrlo slični, barem sa usporedivim arhitekturama, što je i za očekivati obzirom da je arhitektura mreže gotovo identična te da su skupovi podataka 
+Rezultati su vrlo slični, barem sa usporedivim arhitekturama, što je i za očekivati obzirom da je arhitektura mreže gotovo identična te da su skupovi podataka
 slične veličine. Naša mreža, napose SVM za RBF kernelom ima nešto bolji rezultat. To je vjerojatno zbog poboljšane mogućnosti klasifikacije
-koju nudi kernel-SVM u odnosu na guste slojeve te zbog razloga navedenih u cjelini (ref: ono kad pricamo o RBF)
+koju nudi kernel-SVM u odnosu na guste slojeve te zbog razloga navedenih u cjelini \ref{sect:ourres}.
 
 \begin{tabular}{|p{50pt}|p{50pt}|p{30pt}|p{25pt}|p{25pt}|p{25pt}|}
 	\hline
