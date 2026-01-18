@@ -100,7 +100,7 @@ Hibridni CNN-SVM model: Ovdje smo zadnji sloj mreže zamijenili SVM-om s linearn
 CNN koji smo koristili ima arhitekturu, odnosno slojeve kao na slici \ref{pic:CNN_layers}.
 
 
-Kao što je već ranije spomenuto (cjelina \ref{sect:metoda}) "okosnica", odnosno svi slojevi prije sloja za vektorizaciju je zajednički za sve modele. Kod CNN-SVM hibridne inačice se svi slojevi nakon toga jednostavno zamijene SVM-om. To je pak prikazano na slici \ref{}
+Kao što je već ranije spomenuto (cjelina \ref{sect:metoda}) "okosnica", odnosno svi slojevi prije sloja za vektorizaciju je zajednički za sve modele. Kod CNN-SVM hibridne inačice se svi slojevi nakon toga jednostavno zamijene SVM-om. To je pak prikazano na slici \ref{pic:CNN_SVM_layers}
 
 \subsection{Optimizacija i treniranje}Da bismo izvukli maksimum iz oba modela, nismo nasumično birali parametre, već smo proveli Grid Search optimizaciju. Kod SVM-a smo sustavno varirali parametar regularizacije $C$ i parametar $\gamma$ (gamma) kako bismo pronašli idealan kompromis između točnosti na trening setu i sposobnosti generalizacije na novim podacima.Modeli su trenirani na CIFAKE datasetu koji sadrži 120,000 slika, što nam je osiguralo dovoljno veliku i balansiranu bazu za učenje. Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
 
@@ -129,6 +129,7 @@ No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.
 \tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
 \tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
 
+\node[canvas is zy plane at x=0] (temp) at (-1,0,0) {\includegraphics[width=13cm,height=13cm]{../pics/fer_logo.jpg}};
 
 \pic[shift={(0,0,0)}] at (0,0,0) 
     {Box={
@@ -325,10 +326,11 @@ No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.
 \\
 \\
 \begin{tikzpicture}[scale=0.5,rotate=90,transform shape]
-\label{pic:CNN_layers}
+\label{pic:CNN_SVM_layers}
 \tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
 \tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
 
+\node[canvas is zy plane at x=0] (temp) at (-1,0,0) {\includegraphics[width=13cm,height=13cm]{../pics/fer_logo.jpg}};
 
 \pic[shift={(0,0,0)}] at (0,0,0) 
     {Box={
