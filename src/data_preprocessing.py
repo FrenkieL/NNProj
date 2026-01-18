@@ -5,8 +5,10 @@ import pickle
 from sklearn.model_selection import train_test_split
 
 IMG_SIZE = 48                 # !!!!! NE MIJENJAJ OVO JER NEĆE CNN RADIT !!!!!!
-CATEGORIES = ["Real", "AIGenerated"] # ovo je radilo liku: https://github.com/SanKolisetty/AI-Image-Classifier/blob/main/AIImageClassifier.ipynb
-DATA_DIR = "./dataset"        # ovo isto
+CATEGORIES = ["AIGenerated", "Real"] # ovo je radilo liku: https://github.com/SanKolisetty/AI-Image-Classifier/blob/main/AIImageClassifier.ipynb
+DATA_DIR = "./src/dataset"        # ovo isto
+
+MAX_IMAGES_PER_CLASS = 5000  # koliko slika uzeti po klasi
 
 def create_dataset(data_dir=DATA_DIR):
     data = []

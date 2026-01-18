@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras import layers, models
 import numpy as np
-import data_processing
+import data_preprocessing as data_processing
 
 class CNN:
     def __init__(self, input_shape=(48, 48, 3)):
@@ -49,7 +49,7 @@ class CNN:
 
     def _init_extractor(self):
         self.feature_extractor = models.Model(
-            inputs=self.model.input, 
+            inputs=self.model.inputs, 
             outputs=self.model.get_layer("flatten_layer").output
         )
 
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     model = CNN()
     model.train(X_train, y_train, epochs=15)
     model.save_weights("cnn_weights.h5")
-    
+
     print("Extracting features for SVMs...")
     X_train_feats = model.extract_features(X_train)
     X_test_feats = model.extract_features(X_test)
