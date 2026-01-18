@@ -15,7 +15,7 @@
 \usepackage{tikz}
 \usepackage{relsize}
 \usepackage{calc}
-\usepackage[inline]{enumitem}
+\usepackage{paralist}
 \usepackage{import}
 \usepackage{float}
 
@@ -89,6 +89,7 @@ AI, deep-fake, perceptron
 \subsection{Motivacija}Glavni pokretač za ovaj rad je činjenica da povjerenje u digitalne medije rapidno opada. Željeli smo stvoriti alat koji bi mogao služiti kao prva linija obrane protiv dezinformacija. Osim toga, kao studentima nam je bilo zanimljivo dublje ući u samu matematiku klasifikatora – istražiti kako različite funkcije gubitka i optimizacijske metode utječu na točnost modela kada su razlike između klasa minimalne.
 
 \section{Što literatura kaže}
+\label{sect:litrev}
 Pregledom dosadašnjih radova vidjeli smo da su konvolucijske neuronske mreže (CNN) i dalje "zlatni standard" za ovaj problem zbog svoje sposobnosti da izvuku lokalne značajke i teksturalne anomalije. Modeli poput ResNet-50 i EfficientNet-a često postižu točnost veću od 90\% na standardnim skupovima podataka kao što je CIFAKE. Međutim, literatura također naglašava jedan veliki problem: generalizaciju. Modeli koji savršeno rade na slikama iz jednog generatora često potpuno zakazuju kada im se podmetne slika iz novijeg ili drugačijeg modela. Novija istraživanja sugeriraju da bi rješenje moglo biti u promjeni klasifikacijske glave – na primjer, zamjenom standardnog Softmax sloja s SVM (Support Vector Machine) klasifikatorom, što u nekim slučajevima daje robusnije rezultate na rubnim primjerima.
 
 \section{Rješenje}
@@ -127,8 +128,9 @@ Rezultati su dobiveni na podskupu CIFAKE skupa za testiranje (20k slika, 10k po 
 
 \subsection{O našim rezultatima}
 Na grafu točnosti vidimo da modeli svi imaju vrlo sličnu točnost. Što je i za očekivati obzirom da dijele većinu arhitekture. Samo je način donošenja odluke drugačiji nakon što su slike već vektorizirane. Također vidimo da CNN-SVM sa RBF kernelom ima najveću točnost. Autori misle da je razlogu tomu: 
-%\begin{inumerate} \item Krutost linearnog kernela: jedan piksel može više utjecati na vrijednost \item RBF se bolje ponaša kod linearno neodvojivih problema, što ovo jest. \item dodatni hiperparametar kod RBF kernela ($\gamma$). \begin{inumerate}.
-No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.
+\begin{inparaenum}\item Krutost linearnog kernela: jedan piksel može više utjecati na vrijednost \item RBF se bolje ponaša kod linearno neodvojivih problema, što ovo jest. \item dodatni hiperparametar kod RBF kernela ($\gamma$) \end{inparaenum}.
+No detaljnija analiza nadilazi opseg i ciljeve ovog izvještaja.\\
+U cjelini \ref{sect:litrev} je rečeno da je CNN "zlatni standard" za ovakve probleme. No vidimo da je moguće dobiti i bolje rezultate ako se izgradi mreža koja zadržava svu moć vektorizacije slike koju nude ulazni slojevi CNN mreža te se još k tome doda model strojnog učenja koji bolje klasificira primjere neko gusti slojevi.
 
 
 \subsection{Usporedba sa ostalima}
