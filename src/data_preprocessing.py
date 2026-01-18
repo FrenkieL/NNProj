@@ -9,6 +9,8 @@ CATEGORIES = ["Real", "AIGenerated"] # ovo je radilo liku: https://github.com/Sa
 DATA_DIR = "../../archive/train"        # ovo isto
 #DATA_DIR = "../../CIFAKE/train"        # ovo isto
 
+MAX_IMAGES_PER_CLASS = 5000  # koliko slika uzeti po klasi
+
 def create_dataset(data_dir=DATA_DIR):
     data = []
     print(f"Loading images from {data_dir}...")

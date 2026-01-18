@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-import data_preprocessing
-from CNN_body import *
-from SVM import *
+import data_preprocessing as data_processing
+from CNN_body import CNN as AIImageDetector
+from SVM import SVMManager
 
 def evaluate_model(name, y_true, y_pred):
     acc = accuracy_score(y_true, y_pred)
