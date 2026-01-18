@@ -28,7 +28,7 @@ NNProj/
 
 ```bash
 git clone https://github.com/FrenkieL/NNProj.git
-cd NNProj
+cd NNProj/src
 chmod +x setup.sh
 ./setup.sh
 ```
