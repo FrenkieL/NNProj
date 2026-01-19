@@ -87,7 +87,7 @@ AI, deep-fake, perceptron
 
 \subsection{Opis problema}Glavni zadatak koji rješavamo je binarna klasifikacija: moramo odrediti pripada li ulazna slika klasi "stvarnih" ili "AI generiranih" slika. Iako to na papiru zvuči jednostavno, u praksi je vrlo izazovno jer moderni generatori više ne ostavljaju očite pogreške u teksturama ili frekvencijskom spektru, što je ranije bio glavni način detekcije. Također, modeli moraju biti sposobni prepoznati slike iz različitih izvora, a ne samo iz onih na kojima su trenirani.
 
-\subsection{Motivacija}Glavni pokretač za ovaj rad je činjenica da povjerenje u digitalne medije rapidno opada. Željeli smo stvoriti alat koji bi mogao služiti kao prva linija obrane protiv dezinformacija. Osim toga, kao studentima nam je bilo zanimljivo dublje ući u samu matematiku klasifikatora – istražiti kako različite funkcije gubitka i optimizacijske metode utječu na točnost modela kada su razlike između klasa minimalne.
+\subsection{Motivacija}Glavni pokretač za ovaj rad je činjenica da povjerenje u digitalne medije rapidno opada. Željeli smo stvoriti alat koji bi mogao služiti kao pomoć pri moderiranju sadržaja na online platformama.
 
 \section{Pregled literature}
 \label{sect:litrev}
@@ -109,12 +109,12 @@ Kao što je već ranije spomenuto (cjelina \ref{sect:metoda}) "okosnica", odnosn
 
 \subsection{Optimizacija i treniranje}Da bismo izvukli maksimum iz oba modela, nismo nasumično birali parametre, već smo proveli Grid Search optimizaciju. Kod SVM-a smo sustavno varirali parametar regularizacije $C$ i parametar $\gamma$ (gamma) kako bismo pronašli idealan kompromis između točnosti na trening setu i sposobnosti generalizacije na novim podacima.Modeli su trenirani na CIFAKE datasetu koji sadrži 120,000 slika, što nam je osiguralo dovoljno veliku i balansiranu bazu za učenje. 
 
-Pri testiranju smo koristili:
+Pri razvoju smo koristili:
 \begin{enumerate}
-\item Podjelu 7:63:30 za CNN inačicu
-\item Podjelu 70:30 za SVM dio CNN-SVM Inačice.
+\item Podjelu 8:72:20 za CNN inačicu
+\item Podjelu 80:20 za SVM dio CNN-SVM Inačice.
 \end{enumerate}
-Za obje inačice prvotni ispitni skup dijelimo na skup za skup za učenje i skup za testiranje u omjeru 70:30, za učenje CNN (što uključuje i "okosnicu" iz cjeline \ref{sect:metoda}) se daj skup dodatno dijeli u omjeru 90:10 na skup za učenje i skup za validaciju.
+Za obje inačice prvotni ispitni skup dijelimo na skup za skup za učenje i skup za testiranje u omjeru 80:20, za učenje CNN (što uključuje i "okosnicu" iz cjeline \ref{sect:metoda}) se daj skup dodatno dijeli u omjeru 90:10 na skup za učenje i skup za validaciju.
 
 
 Slike su prije ulaza u mrežu normalizirane i skalirane na fiksnu rezoluciju (npr. $224 \times 224$ piksela) kako bi proces učenja bio stabilniji i brži. Uspjeh mjerimo kroz točnost (accuracy), ali i kroz konfuzijsku matricu kako bismo točno vidjeli koji tip slika model najčešće griješi.
@@ -170,7 +170,7 @@ U cjelini \ref{sect:litrev} je rečeno da je CNN "zlatni standard" za ovakve pro
 
 \subsection{Usporedba sa literaturom}
 Rezultati su vrlo slični, barem sa usporedivim arhitekturama, što je i za očekivati obzirom da je arhitektura mreže gotovo identična te da su skupovi podataka
-slične veličine. Naša mreža, napose SVM za RBF kernelom ima nešto bolji rezultat. To je vjerojatno zbog poboljšane mogućnosti klasifikacije
+slične veličine. Naša mreža, napose SVM sa RBF kernelom ima nešto bolji rezultat. To je vjerojatno zbog poboljšane mogućnosti klasifikacije
 koju nudi kernel-SVM u odnosu na guste slojeve te zbog razloga navedenih u cjelini \ref{sect:ourres}.
 
 \begin{tabular}{|p{50pt}|p{50pt}|p{30pt}|p{25pt}|p{25pt}|p{25pt}|}
