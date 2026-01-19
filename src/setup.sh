@@ -35,7 +35,18 @@ fi
 
 # Activate venv
 echo -e "${GREEN}Activating virtual environment...${NC}"
-source "$VENV_PATH/bin/activate.fish"
+# Check shell
+if [ $SHELL = "/bin/bash" ]; then
+    echo "[DETECTED BASH SHELL!]"
+    ACTIVATE_PATH="bin/activate"
+else
+    echo "[DETECTED OTHER SHELL!]"
+    echo "presuming shell: fish"
+    echo "actual shell: $0"
+    ACTIVATE_PATH="bin/activate.fish"
+fi
+echo "act. path set to: ${ACTIVATE_PATH}"
+source "$VENV_PATH/$ACTIVATE_PATH"
 
 # Upgrade pip
 echo -e "${GREEN}Upgrading pip...${NC}"
@@ -51,6 +62,6 @@ fi
 
 echo -e "${GREEN}Setup complete!${NC}"
 echo -e "${YELLOW}To activate the environment, run:${NC}"
-echo -e "  source src/venv/bin/activate.fish"
+echo -e "  source $VENV_PATH/$ACTIVATE_PATH"
 echo -e "${YELLOW}To deactivate the environment, run:${NC}"
 echo -e "  deactivate"
